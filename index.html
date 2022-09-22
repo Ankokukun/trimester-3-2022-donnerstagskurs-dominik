@@ -5,14 +5,13 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/styles.css">
-</script src="assets/js/darkMode.js">
   <title>Document</title>
 </head>
-<body>
+<body onload= "init()">
   <div class="container">
     <div class="titel"><h1>Spiele</h1></div>
     <div class="dropdown"><label class="switch">
-      <input type="checkbox">
+      <input type="checkbox" id ="colorMode">
       <span class="slider round"></span>
     </label></div>
     <div class="gamelist">
@@ -27,12 +26,6 @@
     </div>
     <div class="menue"></div>
   </div>
+<script src="assets/js/darkMode.js"></script>
 </body>
-
-<script>
-  var canvas = document.getElementById("canvas");
-  var ctx = canvas.getContext("2d");
-  ctx.fillStyle = "blue";
-  ctx.fillRect(0, 0, canvas.width, canvas.height);
-</script>
 </html>
