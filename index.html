@@ -5,6 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/styles.css">
+
   <title>Document</title>
 </head>
 <body onload= "init()">
@@ -16,22 +17,16 @@
     </label></div>
     <div class="gamelist">
       <ul>
-        <li>Schach</li>
-        <li>TicTacToe</li>
-        <li>Foobar</li>
+        <li><a href="pong.html">Pong</a></li>
+        <li><a href="SideScroller.html">SideScroller</a></li>
+        <li>Settings</li>
       </ul>
     </div>
     <div class="content">
-      <canvas id="canvas"></canvas>
+      <canvas id="game"></canvas>
     </div>
     <div class="menue"></div>
   </div>
-  <script>
-    var canvas = document.getElementById("canvas");
-    var ctx = canvas.getContext("2d");
-    ctx.fillStyle = "blue";
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-  </script>
 <script src="assets/js/darkMode.js"></script>
 </body>
 </html>
