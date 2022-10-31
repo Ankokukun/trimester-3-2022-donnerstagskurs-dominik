@@ -51,7 +51,7 @@ function randomV()
   let worked = false;
   while (!worked) {
     randomFloat = getRandomFloat(-2,2,2);
-    if(randomFloat <= -0.5) //only negative numbers
+    if(randomFloat <= -0.5) 
     {
       if(randomFloat >= 0.5)
       {
