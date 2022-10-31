@@ -8,12 +8,12 @@ var config = {
         update: update
     },
     physics: {
-        default: 'arcade'
+        default: 'arcade',
     }
 }
 
 //  TO DO GENEREL
-//  xcenter canvas
+////center canvas
 //  get sidebar working
 //  Tic Tac Toe
 
@@ -21,7 +21,7 @@ var config = {
 // TO DO PONG
 //// get random direction of ball fixed --> additional randomizer, that changes - to +
 //   pause screen --> have to add multiple scenes and switch back and forth
-//   fix collision of paddle and ball --> add timer for repelling the ball
+//// fix collision of paddle and ball --> add timer for repelling the ball
 //// fix collision of paddle with worldbounds
 //// put both randomV functions into one
 //   add soundeffects
@@ -51,7 +51,7 @@ function randomV()
   let worked = false;
   while (!worked) {
     randomFloat = getRandomFloat(-2,2,2);
-    if(randomFloat <= -0.5) 
+    if(randomFloat <= -0.5)
     {
       if(randomFloat >= 0.5)
       {
@@ -83,6 +83,25 @@ var leftScoreText;
 
 var rightScore = 0;
 var rightScoreText;
+
+var startTime, endTime;
+
+function startTimer() {
+  startTime = new Date();
+};
+
+function endTimer() {
+  endTime = new Date();
+  var timeDiff = endTime - startTime; //in ms
+  // strip the ms
+  timeDiff /= 1000;
+
+  // get seconds 
+  var seconds = Math.round(timeDiff);
+  console.log(seconds + " seconds");
+  return seconds;
+}
+
 
 function create()
 {
@@ -129,24 +148,27 @@ function create()
       }
     });
     resetBall();
+    startTimer();
 }
 
 //collision
 
 function collisionHandler(_pPaddel)
 {
-  if(_pPaddel == paddleLeft)
+  if (endTimer() >=1) 
   {
-    ball.x = paddleLeft.x + paddleLeft.width + ball.radius
-    ballV.x = - ballV.x
-    ballV.y = - ballV.y
+    if(_pPaddel == paddleLeft)
+    {
+      ball.x = paddleLeft.x + paddleLeft.width + ball.radius
+      ballV.x = - ballV.x
+    }
+    else
+    {
+      ball.x = paddleRight.x - paddleRight.width - ball.radius
+      ballV.x = - ballV.x
+    }
   }
-  else
-  {
-    ball.x = paddleRight.x - paddleRight.width - ball.radius
-    ballV.x = - ballV.x
-    ballV.y = - ballV.y
-  }
+  startTimer();
 }
 
 
