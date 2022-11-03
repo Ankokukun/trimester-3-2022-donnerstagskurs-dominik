@@ -21,20 +21,8 @@ var config = {
 var game = new Phaser.Game(config);
 
 var player;
-/*
-var playerV = {
-    x:0,
-    y:0
-};
-*/
 
 var platform1, platform2;
-/*
-var platformV = {
-    x:0,
-    y:0
-};
-*/
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);

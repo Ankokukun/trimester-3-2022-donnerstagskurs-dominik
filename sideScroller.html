@@ -5,17 +5,31 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="assets/css/styles.css">
-  <style>
-  * {
-    background-color: #222222;
-  }
-  </style>
   <div id="game">
     <script src="assets/js/phaser.js" defer></script>
     <script src="assets/js/sideScroller.js" defer></script>
   </div>
-  <title>Document</title>
+  <title>sideScroller</title>
 </head>
-<body>
-</body>
+<body onload= "init()">
+  <div class="container">
+      <div class="titel"><h1><a href="index.html">Spiele</a></h1></div>
+      <div class="dropdown"><label class="switch">
+        <input type="checkbox" id ="colorMode">
+        <span class="slider round"></span>
+      </label></div>
+      <div class="gamelist">
+        <ul>
+          <li><a href="pong.html">Pong</a></li>
+          <li><a href="TicTacToe.html">TicTacToe</a></li>
+          <li>Settings</li>
+        </ul>
+      </div>
+      <div class="content">
+        <canvas id="canvas"></canvas>
+      </div>
+      <div class="menue"></div>
+    </div>
+  <script src="assets/js/darkMode.js"></script>
+  </body>
 </html>

@@ -51,9 +51,9 @@ function randomV()
   let worked = false;
   while (!worked) {
     randomFloat = getRandomFloat(-2,2,2);
-    if(randomFloat <= -0.5)
+    if(randomFloat <= -0.75)
     {
-      if(randomFloat >= 0.5)
+      if(randomFloat >= 0.75)
       {
         worked = true;
       }
@@ -73,9 +73,9 @@ function resetBall()
     ball.x= 512
     ball.y= 334
     ballV.x= randomV()
-    console.log("BallV.x: "+ballV.x)
+    //console.log("BallV.x: "+ballV.x)
     ballV.y= randomV()
-    console.log("BallV.y: "+ballV.y)
+    //console.log("BallV.y: "+ballV.y)
   }
 
 var leftScore = 0;
@@ -98,7 +98,7 @@ function endTimer() {
 
   // get seconds 
   var seconds = Math.round(timeDiff);
-  console.log(seconds + " seconds");
+  //console.log(seconds + " seconds");
   return seconds;
 }
 
@@ -112,8 +112,8 @@ function create()
     leftScoreText = this.add.text(100, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
   	rightScoreText = this.add.text(config.width - 150, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
-    //leftScoreText.setText('Score: '+leftScore);
-    //rightScoreText.setText('Score: '+rightScore);
+    leftScoreText.setText('Score: '+leftScore);
+    rightScoreText.setText('Score: '+rightScore);
 
     this.physics.add.existing(paddleLeft, false);
     this.physics.add.existing(paddleRight, false);
@@ -135,16 +135,12 @@ function create()
       if(left)
       {
         this.rightScore ++; //score doesn't update
-        rightScoreText.setText('Score: '+rightScore);
         resetBall();
-        //this.scene.pause();
       }
       if(right)
       {
         this.leftScore ++;
-        leftScoreText.setText('Score: '+leftScore);
         resetBall();
-        //this.scene.pause();
       }
     });
     resetBall();
@@ -177,8 +173,7 @@ function update()
   
   let wasd = this.input.keyboard.addKeys('W,S');
   let cursors = this.input.keyboard.createCursorKeys();
-  //let enter = this.input.keyboard.addKeys(13);
-  let escape = this.input.keyboard.addKey(27);
+  //let escape = this.input.keyboard.addKey(27);
 
   if (wasd.S.isDown)
   {

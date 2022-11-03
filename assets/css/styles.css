@@ -38,9 +38,13 @@ a:active {
 }
 */
 
+a {
+  text-decoration: none;
+  color: white;
+}
 
 .dark {
-  background: #333;
+  background: #222222;
   color: white;
 }
 
