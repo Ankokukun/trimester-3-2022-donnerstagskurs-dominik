@@ -22,21 +22,13 @@ var game = new Phaser.Game(config);
 
 var player;
 
-var platform1, platform2;
+var platform1, platform2, platform3, platform4, platform5;
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min); //The maximum is exclusive and the minimum is inclusive
   }
-
-
- var rX = this.getRandomInt(350, 420);
- var rY = this.getRandomInt(130, 400);
- var rW = this.getRandomInt(70, 300);
- var rH = this.getRandomInt(10, 50);
-  
-
 function preload()
 {
     //load sprites for player, and platforms
@@ -46,21 +38,23 @@ function create()
 {
     player = this.add.rectangle(50, 150, 25, 50, 0xff0000);
     platform1 = this.add.rectangle(10,250, 300, 30, 0x999999);
-    platform2 = this.add.rectangle(rX, rY, rW, rH, 0x999999);
     this.physics.add.existing(player,false);
     this.physics.add.existing(platform1,false);
-    this.physics.add.existing(platform2,false);
 
     player.body.setGravityY(500);
     player.body.setCollideWorldBounds(true);
 
     platform1.body.setImmovable(true);
-    platform2.body.setImmovable(true);
-    platform1.body.setGravityX(-10);
+    //platform1.body.setGravityX(-10);
 
     this.physics.add.collider(player, platform1);
-    this.physics.add.collider(player, platform2);
 
+
+    platformSetup(platform2, this.physics, this.add);
+    //platformSetup(platform3, this.physics, this.add);
+    //platformSetup(platform4, this.physics, this.add);
+    //platformSetup(platform5, this.physics, this.add);
+    
 }
 
 function collisionHandler()
@@ -102,4 +96,21 @@ function update()
         
     }
 
+}
+
+
+// random platforms......................................
+
+function platformSetup(pPlatform, physics, add)
+{
+    var rX = getRandomInt(350, 420);
+    var rY = getRandomInt(130, 400);
+    var rW = getRandomInt(70, 300);
+    var rH = getRandomInt(10, 50);
+
+    pPlatform = add.rectangle(rX, rY, rW, rH, 0x999999);
+    physics.add.existing(pPlatform,false);
+    pPlatform.body.setImmovable(true);
+    physics.add.collider(player, pPlatform);
+    //pPlatform.body.setGravityX(-10);
 }
