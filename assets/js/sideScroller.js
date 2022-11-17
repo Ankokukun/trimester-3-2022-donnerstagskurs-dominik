@@ -23,6 +23,7 @@ var game = new Phaser.Game(config);
 var player;
 
 var platform1, platform2, platform3, platform4, platform5;
+var platforms = [{platform1},{platform2},{platform3},{platform4},{platform5}];
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -49,12 +50,19 @@ function create()
 
     this.physics.add.collider(player, platform1);
 
-
     platformSetup(platform2, this.physics, this.add);
-    //platformSetup(platform3, this.physics, this.add);
+    platformSetup(platform3, this.physics, this.add);
     //platformSetup(platform4, this.physics, this.add);
     //platformSetup(platform5, this.physics, this.add);
     
+
+    this.physics.world.on('worldbounds', function(down)
+    {
+      if(down)
+      {
+        player.setPosition(50 ,150);
+      }
+    });
 }
 
 function collisionHandler()
@@ -103,6 +111,7 @@ function update()
 
 function platformSetup(pPlatform, physics, add)
 {
+
     var rX = getRandomInt(350, 420);
     var rY = getRandomInt(130, 400);
     var rW = getRandomInt(70, 300);
@@ -114,3 +123,13 @@ function platformSetup(pPlatform, physics, add)
     physics.add.collider(player, pPlatform);
     //pPlatform.body.setGravityX(-10);
 }
+
+
+/*
+for (let index = 0; index <= platforms.length; index++) 
+{
+    let platform = platforms.at(index)
+    platformSetup(platform, this.physics, this.add);
+    console.log(platform);
+}
+*/
