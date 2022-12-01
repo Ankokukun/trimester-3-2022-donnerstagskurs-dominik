@@ -112,9 +112,6 @@ function create()
     leftScoreText = this.add.text(100, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
   	rightScoreText = this.add.text(config.width - 150, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 
-    leftScoreText.setText('Score: '+leftScore);
-    rightScoreText.setText('Score: '+rightScore);
-
     this.physics.add.existing(paddleLeft, false);
     this.physics.add.existing(paddleRight, false);
     this.physics.add.existing(ball,false);
@@ -134,12 +131,12 @@ function create()
       }
       if(left)
       {
-        this.rightScore ++; //score doesn't update
+        rightScore ++; //score doesn't update
         resetBall();
       }
       if(right)
       {
-        this.leftScore ++;
+        leftScore ++;
         resetBall();
       }
     });
@@ -192,44 +189,22 @@ function update()
   {
       paddleRight.y -= 5;
   }
-/*  can't resume a scene if it's paused, and doesn't react to keypresses
-  if(escape.isDown)
-  {
-    console.log(this.scene.isPaused("default"));
-    if(this.scene.isPaused("default")) {
-      console.log("game resumed"); 
-      this.scene.resume();
-    } else console.log("game paused"); this.scene.pause();
-  }
+
+/*  
+    can't resume a scene if it's paused, and doesn't react to keypresses
+    if(escape.isDown)
+    {
+      console.log(this.scene.isPaused("default"));
+      if(this.scene.isPaused("default")) {
+        console.log("game resumed"); 
+        this.scene.resume();
+      } else console.log("game paused"); this.scene.pause();
+    }
 */
 
   ball.x += ballV.x;
   ball.y += ballV.y;
-
+  
+  leftScoreText.setText('Score: '+leftScore);
+  rightScoreText.setText('Score: '+rightScore);
 }
-
-/*
-
- onload= "init()"
-
-<div class="container">
-    <div class="titel"><h1>Spiele</h1></div>
-    <div class="dropdown"><label class="switch">
-      <input type="checkbox" id ="colorMode">
-      <span class="slider round"></span>
-    </label></div>
-    <div class="gamelist">
-      <ul>
-        <li>Pong</li>
-        <li><a href="SideScroller.html">SideScroller</a></li>
-        <li>Settings</li>
-      </ul>
-    </div>
-    <div class="content">
-      <canvas id="canvas"></canvas>
-    </div>
-    <div class="menue"></div>
-  </div>
-<script src="assets/js/darkMode.js"></script>
-
-*/

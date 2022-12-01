@@ -15,6 +15,16 @@ var config = {
 
 var game = new Phaser.Game(config);
 
+var field1 = {};
+var field2 = {};
+var field3 = {};
+var field4 = {}; 
+var field5 = {}; 
+var field6 = {}; 
+var field7 = {}; 
+var field8 = {}; 
+var field9 = {};
+
 // TODO: ...................................................................................
 // add win detection
 // add score
@@ -27,10 +37,11 @@ function preload()
     this.load.image('black', "assets/tictactoe/black.png")
 }
 
+ var leftScore = 0;
+ var rightScore = 0;
+
 function create()
 {
-    var field1, field2, field3, field4, field5, field6, field7, field8, field9;
-
     var unten = config.height-100;
     var mitteX = config.width/2;
     var mitteY = config.height/2;
@@ -45,14 +56,16 @@ function create()
     createGame(field7, 250, unten, this.add);
     createGame(field8, mitteX, unten, this.add);
     createGame(field9, rechts, unten, this.add);
-//.....................................................................................
 
     var fSprite = this.add.sprite(config.width/2, config.height/2, 'field');
 
     fSprite.displayWidth = 800;
     fSprite.displayHeight = 800;
 
-    
+
+
+    leftScoreText = this.add.text(100, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
+  	rightScoreText = this.add.text(config.width - 150, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
 }
 
 //.....................................................................................
@@ -61,64 +74,139 @@ var active = 'kreis';
 
 function createGame(pField, x, y, add)
 {
-    pField = add.sprite(x, y, 'black');
-    pField.displayWidth = 100;
-    pField.displayHeight = 100;
+    pField.sprite = add.sprite(x, y, 'black');
+    pField.sprite.displayWidth = 100;
+    pField.sprite.displayHeight = 100;
 
-    pField.setInteractive();
+    pField.sprite.setInteractive();
 
-    pField.on('pointerdown', function (pointer){
+    pField.sprite.on('pointerdown', function (pointer){
 
-        if(pField.texture.key == 'black')
+        if(pField.sprite.texture.key == 'black')
         {
             if(active == 'x')
             {
-                pField.setTexture('kreis');
-                pField.displayWidth = 100;
-                pField.displayHeight = 100;
+                pField.sprite.setTexture('kreis');
+                pField.sprite.displayWidth = 100;
+                pField.sprite.displayHeight = 100;
                 active = 'kreis';
             }
             else if(active == 'kreis')
             {
-                pField.setTexture('x');
-                pField.displayWidth = 100;
-                pField.displayHeight = 100;
+                pField.sprite.setTexture('x');
+                pField.sprite.displayWidth = 100;
+                pField.sprite.displayHeight = 100;
                 active = 'x';
             }
         }
-        else if(pField.texture.key !== 'black')
+        else if(pField.sprite.texture.key !== 'black')
         {
-            pField.texture.key == 'kreis' ? active = 'x' : active = 'kreis';
-            pField.setTexture('black');
+            pField.sprite.texture.key == 'kreis' ? active = 'x' : active = 'kreis';
+            pField.sprite.setTexture('black');
 
         }
-        /*
-        if (checkWinner(field1, field2, field3))
-        {
-            console.log("Gewonnen!");
-        }
-        */
+
+        checkWinner();
     });
 }
 
-/*
 function checkWinner()
 {
-    return checkWinner(field1, field2, field3) ||
-           checkWinner(field4, field5, field6) ||
-           checkWinner(field7, field8, field9);
+        if(checkWinTexture() === 'x') {
+            console.log('X hat gewonnen!!!');
+            leftScore++;
+            resetFields();
+        } else if (checkWinTexture() === "kreis") {
+            console.log('O hat gewonnen!!!');
+            rightScore++;
+            resetFields();
+        }
 }
-*/
 
-function checkWinner(pField1, pField2, pField3)
-{
-    return pField1.texture.key === pField2.texture.key && pField2.texture.key === pField3.texture.key;
+function checkWinTexture() {
+    if (field1.sprite.texture.key === field2.sprite.texture.key && field2.sprite.texture.key === field3.sprite.texture.key && field3.sprite.texture.key !== "black")
+    {
+        return field3.sprite.texture.key;
+    }
+    else if (field4.sprite.texture.key === field5.sprite.texture.key && field5.sprite.texture.key === field6.sprite.texture.key && field6.sprite.texture.key !== "black")
+    {
+        return field6.sprite.texture.key;
+    }
+    else if (field7.sprite.texture.key === field8.sprite.texture.key && field8.sprite.texture.key === field9.sprite.texture.key && field9.sprite.texture.key !== "black")
+    {
+        return field9.sprite.texture.key;
+    }
+    else if (field1.sprite.texture.key === field5.sprite.texture.key && field5.sprite.texture.key === field9.sprite.texture.key && field9.sprite.texture.key !== "black")
+    {
+        return field9.sprite.texture.key;
+    }
+    else if (field3.sprite.texture.key === field5.sprite.texture.key && field5.sprite.texture.key === field7.sprite.texture.key && field7.sprite.texture.key !== "black")
+    {
+        return field7.sprite.texture.key;
+    } 
+    else if (field1.sprite.texture.key === field4.sprite.texture.key && field4.sprite.texture.key === field7.sprite.texture.key && field7.sprite.texture.key !== "black")
+    {
+        return field7.sprite.texture.key;
+    }
+    else if  (field2.sprite.texture.key === field5.sprite.texture.key && field5.sprite.texture.key === field8.sprite.texture.key && field8.sprite.texture.key !== "black")
+    {
+        return field8.sprite.texture.key;
+    }
+    else if (field3.sprite.texture.key === field6.sprite.texture.key && field6.sprite.texture.key === field9.sprite.texture.key && field9.sprite.texture.key !== "black")
+    {
+        return field9.sprite.texture.key;
+    }
+    else
+    {
+        return "";
+    }
 }
+
+function resetFields()
+{
+    field1.sprite.setTexture('black');
+    field2.sprite.setTexture('black');
+    field3.sprite.setTexture('black');
+    field4.sprite.setTexture('black');
+    field5.sprite.setTexture('black');
+    field6.sprite.setTexture('black');
+    field7.sprite.setTexture('black');
+    field8.sprite.setTexture('black');
+    field9.sprite.setTexture('black');
+}
+
+
+//.....................................................................................
+
+var leftScore = 0;
+var leftScoreText;
+
+var rightScore = 0;
+var rightScoreText
+
+//.....................................................................................
 
 function update()
 {
-
+    leftScoreText.setText('Score: '+leftScore);
+    rightScoreText.setText('Score: '+rightScore);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 // nützliches:

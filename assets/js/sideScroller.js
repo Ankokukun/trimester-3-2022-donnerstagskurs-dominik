@@ -44,6 +44,7 @@ function create()
 
     player.body.setGravityY(500);
     player.body.setCollideWorldBounds(true);
+    player.body.onWorldBounds = true;
 
     platform1.body.setImmovable(true);
     //platform1.body.setGravityX(-10);
@@ -56,13 +57,19 @@ function create()
     //platformSetup(platform5, this.physics, this.add);
     
 
-    this.physics.world.on('worldbounds', function(down)
+    this.physics.world.on('worldbounds', function(body, up, down, left, right)
     {
       if(down)
       {
         player.setPosition(50 ,150);
+        //console.log('hit the ground!')
+      }
+      if(body, up, left, right)
+      {
+        
       }
     });
+
 }
 
 function collisionHandler()
