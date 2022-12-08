@@ -2,7 +2,7 @@ var config = {
     width: 1024,
     height: 768,
     backgroundColor: 0x000000,
-    type:Phaser.AUTO,
+    type: Phaser.AUTO,
     scene: {
         create: create,
         update: update
@@ -70,12 +70,12 @@ function randomV()
 
 function resetBall()
   {
-    ball.x= 512
-    ball.y= 334
-    ballV.x= randomV()
-    //console.log("BallV.x: "+ballV.x)
-    ballV.y= randomV()
-    //console.log("BallV.y: "+ballV.y)
+    ball.x= 512;
+    ball.y= 334;
+    ballV.x= randomV();
+    //console.log("BallV.x: "+ballV.x);
+    ballV.y= randomV();
+    //console.log("BallV.y: "+ballV.y);x
   }
 
 var leftScore = 0;
@@ -98,7 +98,7 @@ function endTimer() {
 
   // get seconds 
   var seconds = Math.round(timeDiff);
-  //console.log(seconds + " seconds");
+  //console.log(seconds + " seconds");xxxx
   return seconds;
 }
 
@@ -111,7 +111,7 @@ function create()
 
     leftScoreText = this.add.text(100, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
   	rightScoreText = this.add.text(config.width - 150, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-
+x
     this.physics.add.existing(paddleLeft, false);
     this.physics.add.existing(paddleRight, false);
     this.physics.add.existing(ball,false);
@@ -130,7 +130,7 @@ function create()
         ballV.y = -ballV.y;
       }
       if(left)
-      {
+      {xx
         rightScore ++; //score doesn't update
         resetBall();
       }
