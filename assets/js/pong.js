@@ -14,8 +14,8 @@ var config = {
 
 //  TO DO GENEREL
 ////center canvas
-//  get sidebar working
-//  Tic Tac Toe
+////get sidebar working
+////Tic Tac Toe
 
 
 // TO DO PONG
@@ -25,7 +25,7 @@ var config = {
 //// fix collision of paddle with worldbounds
 //// put both randomV functions into one
 //   add soundeffects
-//   fix ScoreCounter
+////fix ScoreCounter
 
 var game = new Phaser.Game(config);
 
@@ -111,7 +111,6 @@ function create()
 
     leftScoreText = this.add.text(100, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
   	rightScoreText = this.add.text(config.width - 150, 10, 'Score: ', { fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif' });
-x
     this.physics.add.existing(paddleLeft, false);
     this.physics.add.existing(paddleRight, false);
     this.physics.add.existing(ball,false);

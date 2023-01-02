@@ -9,21 +9,26 @@ var config = {
     },
     physics: {
         default: 'arcade',
-        /*
         arcade: {
-            gravity: {x:-10},
-            debug: false      
+            //gravity: {x:-10},
+            debug: true
         }
-        */
     }
 }
 
 var game = new Phaser.Game(config);
 
 var player;
+var platforms = [];
 
-var platform1, platform2, platform3, platform4, platform5;
-var platforms = [{platform1},{platform2},{platform3},{platform4},{platform5}];
+const minPlatformSize = 150;
+const maxPlatformSize = 250;
+
+const minXDifference = 100;
+const maxXDifference = 200;
+const maxYDifference = 100;
+
+
 
 function getRandomInt(min, max) {
     min = Math.ceil(min);
@@ -38,30 +43,25 @@ function preload()
 function create()
 {
     player = this.add.rectangle(50, 150, 25, 50, 0xff0000);
-    platform1 = this.add.rectangle(10,250, 300, 30, 0x999999);
     this.physics.add.existing(player,false);
-    this.physics.add.existing(platform1,false);
 
     player.body.setGravityY(500);
     player.body.setCollideWorldBounds(true);
     player.body.onWorldBounds = true;
 
-    platform1.body.setImmovable(true);
-    //platform1.body.setGravityX(-10);
-
-    this.physics.add.collider(player, platform1);
-
-    platformSetup(platform2, this.physics, this.add);
-    platformSetup(platform3, this.physics, this.add);
-    //platformSetup(platform4, this.physics, this.add);
-    //platformSetup(platform5, this.physics, this.add);
-    
+    let platform1 = this.add.rectangle(10,250, 300, 30, 0x999999);
+    platformSetup(platform1, this.physics);
+    for (let i = 0; i<10; i++)
+    {
+        let platform = this.add.rectangle(0,0,0,50,0x999999);
+        platformSetup(platform, this.physics);
+    }
 
     this.physics.world.on('worldbounds', function(body, up, down, left, right)
     {
       if(down)
       {
-        player.setPosition(50 ,150);
+        reset();
         //console.log('hit the ground!')
       }
       if(body, up, left, right)
@@ -70,16 +70,11 @@ function create()
       }
     });
 
-}
-
-function collisionHandler()
-{
-
+    reset();
 }
 
 function update()
 {
-
     let wasd = this.input.keyboard.addKeys('W,A,S,D');
     let escape = this.input.keyboard.addKey(27);
 
@@ -111,32 +106,54 @@ function update()
         
     }
 
+    let platform1 = platforms.at(0);
+    if((platform1.x + platform1.width < 0))
+    {
+        platforms.shift();
+        setPlatformToValidPosition(platform1, platforms.at(-1));
+        platforms.push(platform1);
+    }
+
 }
 
 
 // random platforms......................................
 
-function platformSetup(pPlatform, physics, add)
+function platformSetup(pPlatform, physics)
 {
-
-    var rX = getRandomInt(350, 420);
-    var rY = getRandomInt(130, 400);
-    var rW = getRandomInt(70, 300);
-    var rH = getRandomInt(10, 50);
-
-    pPlatform = add.rectangle(rX, rY, rW, rH, 0x999999);
     physics.add.existing(pPlatform,false);
-    pPlatform.body.setImmovable(true);
     physics.add.collider(player, pPlatform);
+    pPlatform.body.setImmovable(true);
+    platforms.push(pPlatform);
     //pPlatform.body.setGravityX(-10);
 }
 
-
-/*
-for (let index = 0; index <= platforms.length; index++) 
+function setPlatformToValidPosition(currentPlatform, prevPlatform)
 {
-    let platform = platforms.at(index)
-    platformSetup(platform, this.physics, this.add);
-    console.log(platform);
+    let width = getRandomInt(minPlatformSize,maxPlatformSize);
+    let posX = prevPlatform.x + prevPlatform.width + getRandomInt(minXDifference,maxXDifference);
+    let posY = prevPlatform.y + getRandomInt(-maxYDifference, maxYDifference);
+    if (posY<120) posY = 120;
+    else if (posY > 718) posY = 718;
+
+    currentPlatform.setPosition(posX, posY);
+    currentPlatform.width = width;
+    currentPlatform.body.setSize(width, currentPlatform.height);
 }
-*/
+
+function reset()
+{
+    player.setPosition(50, 150);
+    let platform;
+    let platform1 = platforms.at(0);
+    platform1.setPosition(10,250);
+    platform1.width =512 + 150;
+    platform1.body.setSize(platform1.width, platform1.height);
+    let prevPlatform = platform1;
+    for(let i = 1; i<11;i++)
+    {
+        platform = platforms.at(i);
+        setPlatformToValidPosition(platform,prevPlatform);
+        prevPlatform = platform;
+    }
+}
